@@ -8,24 +8,9 @@ RSpec.describe Player, type: :model do
       expect(subject).to be_valid
     end
 
-    it 'is not valid without first name' do
-      subject.first_name = nil
-      expect(subject).to_not be_valid
-    end
-
-    it 'is not valid without last name' do
-      subject.last_name = nil
-      expect(subject).to_not be_valid
-    end
-
-    it 'is not valid without number' do
-      subject.number = nil
-      expect(subject).to_not be_valid
-    end
-
-    it 'is not valid without foot' do
-      subject.foot = nil
-      expect(subject).to_not be_valid
-    end
+    it { should validate_presence_of(:first_name) }
+    it { should validate_presence_of(:last_name) }
+    it { should validate_presence_of(:number) }
+    it { should validate_presence_of(:foot) }
   end
 end
