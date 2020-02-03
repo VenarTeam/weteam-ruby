@@ -41,10 +41,10 @@ CREATE TABLE public.ar_internal_metadata (
 
 CREATE TABLE public.players (
     id bigint NOT NULL,
-    first_name character varying,
-    last_name character varying,
-    number numeric,
-    fit boolean,
+    first_name character varying NOT NULL,
+    last_name character varying NOT NULL,
+    number numeric NOT NULL,
+    fit boolean DEFAULT true,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     foot public.foot
@@ -80,10 +80,50 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: teams; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.teams (
+    id bigint NOT NULL,
+    name character varying NOT NULL,
+    description character varying,
+    claimed boolean DEFAULT false,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: teams_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.teams_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: teams_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.teams_id_seq OWNED BY public.teams.id;
+
+
+--
 -- Name: players id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.players ALTER COLUMN id SET DEFAULT nextval('public.players_id_seq'::regclass);
+
+
+--
+-- Name: teams id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.teams ALTER COLUMN id SET DEFAULT nextval('public.teams_id_seq'::regclass);
 
 
 --
@@ -111,6 +151,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: teams teams_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.teams
+    ADD CONSTRAINT teams_pkey PRIMARY KEY (id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -118,6 +166,7 @@ SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
 ('20200131204832'),
-('20200131205940');
+('20200131205940'),
+('20200203172337');
 
 
