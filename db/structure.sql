@@ -41,10 +41,10 @@ CREATE TABLE public.ar_internal_metadata (
 
 CREATE TABLE public.players (
     id bigint NOT NULL,
-    first_name character varying,
-    last_name character varying,
-    number numeric,
-    fit boolean,
+    first_name character varying NOT NULL,
+    last_name character varying NOT NULL,
+    number numeric NOT NULL,
+    fit boolean DEFAULT true,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     foot public.foot
@@ -85,7 +85,9 @@ CREATE TABLE public.schema_migrations (
 
 CREATE TABLE public.teams (
     id bigint NOT NULL,
-    name character varying,
+    name character varying NOT NULL,
+    description character varying,
+    claimed boolean DEFAULT false,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
